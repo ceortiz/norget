@@ -1,0 +1,8 @@
+{% extends 'news/base.html' %}
+{% block title %} Post News {% endblock %}
+{% block body %}
+	<form method="POST" id="news_form" action="{% url 'post_news' %}">
+		{{ news_form.as_p }}
+		<button type="submit">Create News</button>
+	</form>
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends 'news/base.html' %}
+{% block body %}
+	{% if categories %}
+		<ul>
+			{% for category in categories %}
+				<li><a href="#">{{ category }}</a></li>
+			{% endfor %}
+		</ul>
+	{% else %}
+		<h2>Nothing here.</h2>
+	{% endif %}
+{% endblock %}

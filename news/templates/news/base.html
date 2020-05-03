@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>{% block title %}NORGET{% endblock %}</title>
+	{% load staticfiles %}	
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<style type="text/css">
+		* {
+			margin: 0px;
+			padding: 0px;
+			box-sizing: border-box;
+			background-color: lightgreen;
+		}
+
+		header {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			padding: 30px 10px;
+			border-bottom: 1px solid black;
+		}
+
+		li, a, button {
+			font-family: Times;
+			font-size: 24px;
+			color: black;
+			font-weight: 20px;
+			text-decoration: none;
+			padding: 0 0 5px 0;
+			background: inherit;
+		}
+
+		nav ul {
+			display: flex;
+		}
+
+		.nav_links {
+			list-style: none;
+		}
+
+		.nav_links li {
+			display: inline-block;
+			padding: 0px 15px;
+		}
+
+		.nav_links li a:hover {
+			color: maroon;
+			border-bottom: 3px solid #0080ff;
+		}
+
+		.logo a {
+			font: bold 30px Times;
+			margin-left: 50px;
+		}
+
+		.logo a:hover {
+			color:maroon;
+		}
+	</style>
+</head>
+<body>
+	<header>
+		<div class="logo">
+			<a href="#">NORGET</a>
+		</div>
+		<a href="#" class="toggle-button">
+			<span class="bar"></span>
+			<span class="bar"></span>
+			<span class="bar"></span>
+		</a>
+		<div>
+			<a href="#">Search</a>
+			<input type="text" name="search">
+		</div>
+		<nav>
+			<ul class="nav_links">
+				<li><a href="{% url 'post_news' %}">Post a News</a></li>
+				<li><a href="#">Notifications</a></li>
+				<li><a href="#">Profile</a></li>
+			</ul>
+		</nav>
+	</header>
+
+	<section>
+		{% block body %}
+		{% endblock %}
+	</section>
+
+	<aside>
+		<h4>Others</h4>
+	</aside>
+</body>
+</html>
