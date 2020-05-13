@@ -76,47 +76,54 @@ def post_headline(request, method="POST"):
 	if request.method == "POST":
 		try:
 			#get category object if already existing
-			category = Category.objects.get(category_name=request.POST.get('categories'))
+			category = Category.objects.get(category_name = request.POST.get('categories'))
 		except:
 			#create new category if no similar category exists
 			category = Category(category_name = request.POST.get('categories'))
 			category.save()
 
+		try:
+			location = Location.objects.get(address = 'Dancalan')
+		except:
+			location = Location(request.POST.get('location'))
+			location.save()
 
-		location = Location(
-			address = 'Dancalan',
-			city = 'Sorsogon',
-			state_province = 'Sorsogon',
-			country = 'Philippines',
-			)
-		location.save()
+		try:
+			heading = Heading.objects.get(heading_title = request.POST.get('headline'))
+		except:
+			heading = Heading(
+				heading_title = request.POST.get('headline'),
+				expiration = datetime.datetime.now() + datetime.timedelta(days=7),
+				number_of_news = 0,
+				status = 'Pending',
+				upvotes = 0,
+				#downvotes = 0,
+				category = category,
+				location = location,
+				)
+			heading.save()
 
-		heading = Heading(
-			heading_title = request.POST.get('headline'),
-			expiration = datetime.datetime.now() + datetime.timedelta(days=7),
-			number_of_news = 0,
-			status = 'Pending',
-			upvotes = 0,
-			#downvotes = 0,
-			category = category,
-			location = location,
-			)
-		heading.save()
+		try:
+			publisher = Publisher.objects.get(publisher_name = request.POST.get('news_site_name'))
+		except:
+			publisher = Publisher(
+				publisher_name = request.POST.get('news_site_name'),
+				address = 'Philippines',
+				location = location,
+				website = request.POST.get('news_url'),
+				)
+			publisher.save()
 
-		publisher = Publisher(
-			publisher_name = request.POST.get('news_site_name'),
-			address = 'Philippines',
-			location = location,
-			website = request.POST.get('news_url'),
-			)
-		publisher.save()
+		try:
+			author = Author.objects.get(author_name = request.POST.get('news_author'))
+		except:
+			author = Author(
+				salutation = 'Ms',
+				author_name = request.POST.get('news_author'),
+				email = 'ceortiz@up.edu.ph',
+				)
+			author.save()
 
-		author = Author(
-			salutation = 'Ms',
-			author_name = request.POST.get('news_author'),
-			email = 'ceortiz@up.edu.ph',
-			)
-		author.save()
 
 		news = News(
 			news_title = request.POST.get('news_title'),
