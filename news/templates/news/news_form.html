@@ -1,8 +1,64 @@
 {% extends 'news/base.html' %}
+{% load staticfiles %}	
 {% block title %} Post News {% endblock %}
 {% block body %}
-	<form method="POST" id="news_form" action="{% url 'post_news' %}">
-		{{ news_form.as_p }}
-		<button type="submit">Create News</button>
+	<p>Please select your type of post:</p>
+	<input type="radio" name="action" id="news" value="news">
+	<label for="news">Headline</label> <br>
+	<input type="radio" name="action" id="counter_headline" value="counter_headline">
+	<label for="counter_headline">Counter Headline</label>
+
+	<ul>
+		<li>Make sure the headline is straightforward and clear</li>
+		<li>It should create a point/stand.</li>
+		<li>If a headline already exists, review post if it falls under it.</li>
+		<li>Remember that it could be placed in the section where records will be permanently archived.</li>
+	</ul> 
+
+	<form method="POST" id="news_form" action="{% url 'post_headline' %}">
+		{% csrf_token %}
+		<br>
+		<label for="categories">Category</label>
+		<select name="categories">
+			<option value="Politics">Politics</option>
+			<option value="Health">Health</option>
+			<option value="Entertainment">Entertainment</option>
+			<option value="Environment">Environment</option>
+			<option value="Sports">Sports</option>
+			<option value="Arts">Arts</option>
+		</select>
+		</br>
+		<label>
+			Paste URL here:
+			<input type="url" name="news_url" id="news_url" placeholder="URL">
+		</label>
+		</br>
+		<div id="news_preview">
+			
+		</div>
+		</br>
+		Create Headline<input type="text" name="headline" id="headline" placeholder="Headline">
+		<div id="headlines">
+			
+		</div>
+		</br>
+		<button type="submit" id="submit_news">Submit</button>
 	</form>
+
+	<form method="POST" id="counter_headline_form" action="#">
+		{% csrf_token %}
+		<br>
+		Create Counter Headline<input type="text" name="counter_headline" placeholder="Counter Headline">
+		</br>
+
+		Type the original headline<input type="text" name="orig_headline" placeholder="Headline">
+		</br>
+		<button type="submit" id="submit_counternews">Submit</button>
+	</form>
+
+{% endblock %}
+
+{% block javascript %}
+	<script src="{% static 'news/news_preview.js' %}"></script>
+	<script src="{% static 'news/headline_selection.js' %}"></script>
 {% endblock %}

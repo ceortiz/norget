@@ -88,6 +88,8 @@ class Location(models.Model):
 	state_province = models.CharField(max_length=30) 
 	country = models.CharField(max_length=50)
 
+	def __str__(self):
+		return self.address
 
 class Heading(models.Model):
 	Choose = ''
@@ -98,17 +100,42 @@ class Heading(models.Model):
 		(Resolved, 'Resolved'),
 		(Pending, 'Pending'),
 		)
-	heading_title = models.CharField(max_length=30)
+	heading_title = models.CharField(max_length=50)
 	expiration = models.DateField()
 	number_of_news = models.PositiveIntegerField(validators=[MinValueValidator(1), MaxValueValidator(24)]) 
 	status = models.CharField(max_length=30, choices=STATUS_CHOICES, default=Choose)
 	#upvotes should be equivalent to the number of users who sent the news to staging area
 	upvotes = models.IntegerField(default=0)
 	#downvotes are new numbers that will determine if news will be sent to permanent space
-	downvotes = models.IntegerField(default=0)
+	#downvotes = models.IntegerField(default=0)
 	category = models.ForeignKey(Category, on_delete=models.CASCADE)
 	location = models.ForeignKey(Location, on_delete=models.CASCADE)
 
+	def __str__(self): 
+		return self.heading_title
+
+class CounterHeading(models.Model):
+	Choose = ''
+	Resolved = 'Resolved'
+	Pending = 'Pending'
+	STATUS_CHOICES = (
+		('', 'Choose'),
+		(Resolved, 'Resolved'),
+		(Pending, 'Pending'),
+		)
+	counterheading_title = models.CharField(max_length=50)
+	counter_expiration = models.DateField()
+	counter_number_of_news = models.PositiveIntegerField(validators=[MinValueValidator(1), MaxValueValidator(24)]) 
+	counter_status = models.CharField(max_length=30, choices=STATUS_CHOICES, default=Choose)
+	#upvotes should be equivalent to the number of users who sent the news to staging area
+	counter_upvotes = models.IntegerField(default=0)
+	#downvotes are new numbers that will determine if news will be sent to permanent space
+	#counter_downvotes = models.IntegerField(default=0)
+	counter_category = models.ForeignKey(Category, on_delete=models.CASCADE)
+	counter_location = models.ForeignKey(Location, on_delete=models.CASCADE)
+
+	def __str__(self): 
+		return self.counterheading_title
 
 class Publisher(models.Model):
 	publisher_name = models.CharField(max_length=30)
@@ -117,7 +144,7 @@ class Publisher(models.Model):
 	#city = models.CharField(max_length=60) 
 	#state_province = models.CharField(max_length=30) 
 	#country = models.CharField(max_length=50) 
-	website = models.URLField()
+	website = models.URLField(max_length=200)
 	
 	class Meta:
 		ordering = ["-publisher_name"]
@@ -129,7 +156,7 @@ class Author(models.Model):
 	salutation = models.CharField(max_length=10)
 	author_name = models.CharField(max_length=200)
 	email = models.EmailField()
-	headshot = models.ImageField(upload_to='author_headshots')
+	#headshot = models.ImageField(upload_to='author_headshots')
 	
 	def __str__(self): 
 		return self.author_name

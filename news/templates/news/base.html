@@ -58,12 +58,28 @@
 		.logo a:hover {
 			color:maroon;
 		}
+
+		#news_form, #counter_headline_form {
+			display: none;
+		}
+
+		#news:checked ~ #news_form {
+			display: block;
+		}
+
+		#counter_headline:checked ~ #counter_headline_form {
+			display: block;
+		}
+
+		input[type="text"], input[type="url"] {
+			text-align:center;
+		}
 	</style>
 </head>
 <body>
 	<header>
 		<div class="logo">
-			<a href="#">NORGET</a>
+			<a href="{% url 'index' %}">NORGET</a>
 		</div>
 		<a href="#" class="toggle-button">
 			<span class="bar"></span>
@@ -77,6 +93,7 @@
 		<nav>
 			<ul class="nav_links">
 				<li><a href="{% url 'post_news' %}">Post a News</a></li>
+				<li><a href="{% url 'memory' %}">Memory</a></li>
 				<li><a href="#">Notifications</a></li>
 				<li><a href="#">Profile</a></li>
 			</ul>
@@ -91,5 +108,9 @@
 	<aside>
 		<h4>Others</h4>
 	</aside>
+
+	<script src="{% static 'news/jquery-3.5.0.min.js' %}"></script>
+	{% block javascript %}
+	{% endblock %}
 </body>
 </html>
