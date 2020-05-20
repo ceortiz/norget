@@ -5,7 +5,7 @@
 	<input type="hidden" name="news_image" value="{{news_image}}">
 	
 	<h1>{{news_title}}</h1>
-	<input type="hidden" name="news_title" value="{{news_title}}">
+	<input type="hidden" name="news_title" id="news_title" value="{{news_title}}">
 	
 	<h2>{{news_site_name}}</h2>
 	<input type="hidden" name="news_site_name" value="{{news_site_name}}">
@@ -17,4 +17,15 @@
 
 	<h2>{{news_author}}</h2>
 	<input type="hidden" name="news_author" value="{{news_author}}">
+</div>
+
+<div>
+	{% if existing_news %}
+		<h2 style="color:blue;">A similar news appears in:</h2>
+		{% for file in existing_news %}
+			<h2>{{file.category}} in {{file.heading}} heading</h2>
+		{% endfor %}
+	{% else %}
+
+	{% endif %}
 </div>

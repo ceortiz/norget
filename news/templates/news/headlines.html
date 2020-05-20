@@ -1,9 +1,21 @@
 {% if headlines %}
 	<ul>
-		{% for headline in headlines %}
-			<li>{{headline.heading_title}} - # of upvotes</li>
+		{% for headline, related_news in headlines %}
+			<li>{{headline}} - # of upvotes</li>			
+				{% for news in related_news %}
+					{% if news is not None%}
+						<h3 style="color:red;">A similar post had already been posted under this headline.</h3>
+						<ul>
+							<li style="color:red;">{{news}}</li>
+						</ul>
+					{% else %}
+						<h3>No similar news</h3>
+					{% endif %}
+					<br>
+				{% endfor %}
 		{% endfor %}
 	</ul>
 {% else %}
 	<h1>No similar headline</h1>
 {% endif %}
+

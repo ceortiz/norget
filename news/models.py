@@ -108,7 +108,8 @@ class Heading(models.Model):
 	upvotes = models.IntegerField(default=0)
 	#downvotes are new numbers that will determine if news will be sent to permanent space
 	#downvotes = models.IntegerField(default=0)
-	category = models.ForeignKey(Category, on_delete=models.CASCADE)
+	categories = models.ManyToManyField(Category)
+	#category = models.ForeignKey(Category, on_delete=models.CASCADE)
 	location = models.ForeignKey(Location, on_delete=models.CASCADE)
 
 	def __str__(self): 
@@ -131,7 +132,8 @@ class CounterHeading(models.Model):
 	counter_upvotes = models.IntegerField(default=0)
 	#downvotes are new numbers that will determine if news will be sent to permanent space
 	#counter_downvotes = models.IntegerField(default=0)
-	counter_category = models.ForeignKey(Category, on_delete=models.CASCADE)
+	#counter_category = models.ForeignKey(Category, on_delete=models.CASCADE)
+	counter_categories = models.ManyToManyField(Category)
 	counter_location = models.ForeignKey(Location, on_delete=models.CASCADE)
 
 	def __str__(self): 
@@ -171,17 +173,21 @@ class News(models.Model):
 		(Staged, 'Staged'),
 		)
 	news_title = models.CharField(max_length=250)
+	description = models.TextField(default="None")
 	pub_date = pub_date = models.DateTimeField('date published')
 	link = models.URLField()
 	status = models.CharField(max_length=30, choices=STATUS_CHOICES, default=Choose)
 	upvotes = models.IntegerField(default=0)
 	#downvotes = models.IntegerField(default=0)
-	heading = models.ForeignKey(Heading, on_delete=models.CASCADE)
+	headings = models.ManyToManyField(Heading)
+	#heading = models.ForeignKey(Heading, on_delete=models.CASCADE)
 	author = models.ForeignKey(Author, on_delete=models.CASCADE)
 	publisher = models.ForeignKey(Publisher, on_delete=models.CASCADE)
-	category = models.ForeignKey(Category, on_delete=models.CASCADE)
+	#category = models.ForeignKey(Category, on_delete=models.CASCADE)
+	categories = models.ManyToManyField(Category)
 	location = models.ForeignKey(Location, on_delete=models.CASCADE)
 
+	#I think you should use MANY TO MANY FIELD since a category can have multiple news
 	def __str__(self):
 		return self.news_title
 

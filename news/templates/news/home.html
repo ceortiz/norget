@@ -5,6 +5,11 @@
 		{% for heading in headings %}
 			<div>
 				<h1 style="color:blue;">#{{heading.heading_title}}</h1>
+				{% for category in heading.categories.all %}
+					<ul>
+						<li><h3>{{ category }}</h3></li>
+					</ul>
+				{% endfor %}
 				{% for news in heading.news_set.all %}
 					<ul>
 						<li>{{news.news_title}} - #upvotes</li>

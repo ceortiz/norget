@@ -15,6 +15,7 @@ $(document).ready(function() {
 			type: "POST",
 			url: "/news/headlines",
 			data: {
+				"news_title": $("#news_title").val(),
 				"keyword": $("#headline").val(),
 				"csrfmiddlewaretoken": $("input[name=csrfmiddlewaretoken]").val()
 			},

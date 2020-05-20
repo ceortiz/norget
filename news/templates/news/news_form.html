@@ -19,7 +19,8 @@
 		{% csrf_token %}
 		<br>
 		<label for="categories">Category</label>
-		<select name="categories">
+		<select id="categories" name="categories" required>
+			<option value="">Choose</option>
 			<option value="Politics">Politics</option>
 			<option value="Health">Health</option>
 			<option value="Entertainment">Entertainment</option>

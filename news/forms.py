@@ -6,8 +6,9 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 from django import forms
 from news.models import Category, Location, Heading, Publisher, Author, News
 
-class NewsForm(ModelForm):
+'''class NewsForm(ModelForm):
 	class Meta:
 		model = News
 		fields = ['news_title', 'link', 'heading', 'author', 'pub_date', 'publisher', 'category', 'location']
 
+'''

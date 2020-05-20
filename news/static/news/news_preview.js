@@ -13,12 +13,14 @@ $(document).ready(function(){
 
 	//user is "finished typing," do something
 	function doneTyping () {
-	    //do something
-	   // alert('done typ');
+	    //get the chosen category
+	    //query by looking for news_url or title under the same category
+	    //query for heading
 	    $.ajax({
 	    	type: "POST",
 	    	url: "/news/get_data",
 	    	data: {
+	    		//"category": $("#categories").val(),
 	    		"news_url": $('#news_url').val(),
 	    		"csrfmiddlewaretoken": $("input[name=csrfmiddlewaretoken]").val()
 	    	},
