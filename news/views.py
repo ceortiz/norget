@@ -5,6 +5,7 @@ from bs4 import BeautifulSoup
 from django.views import generic
 from urllib.request import urlopen
 from django.db.models import Q, Count
+from django.contrib.postgres.search import SearchQuery, SearchRank, SearchVector
 from nltk.corpus import stopwords 
 from nltk.tokenize import word_tokenize 
 from collections import defaultdict
