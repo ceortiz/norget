@@ -102,12 +102,12 @@ def get_data(request, method="POST"):
 
 		duplicates = News.objects.filter(news_title__icontains=title)
 
-		#get the title
-		stopwords = set(stopwords.words('english'))
-						
-		word_tokens = word_tokenize(title)
-		#split title into words, remove stopwords and put them into a varialbe
-		filtered_sentence = [w for w in word_tokens if not w in stop_words] 
+		'''#get the title
+								stopwords = set(stopwords.words('english'))
+												
+								word_tokens = word_tokenize(title)
+								#split title into words, remove stopwords and put them into a varialbe
+								filtered_sentence = [w for w in word_tokens if not w in stop_words] '''
 						
 		#use postgres search functionality e.g. weights
 		#iterate thrue the variable
