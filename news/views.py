@@ -1,6 +1,7 @@
 from django.shortcuts import render, HttpResponse, redirect
 import requests
 import datetime
+import string
 from bs4 import BeautifulSoup
 from django.views import generic
 from urllib.request import urlopen
@@ -101,25 +102,37 @@ def get_data(request, method="POST"):
 		#query for possible duplicates 
 		existing_news = []
 
-		duplicates = News.objects.filter(news_title__icontains=title)
+		#duplicates = News.objects.filter(news_title__icontains=title)
 
 		#get the title
 		stopwords = set(stopwords.words('english'))
 						
 		word_tokens = word_tokenize(title)
 		#split title into words, remove stopwords and put them into a varialbe
-		filtered_sentence = [w for w in word_tokens if not w in stop_words] 
-						
+		pre_filtered_sentence = [w for w in word_tokens if not w in stop_words] 
+		
+		punctuations = list(string.punctuation)
+		punctuations.append("''")
+
+		filtered_sentence = [i for i in pre_filtered_sentence if i not in punctuations]
 		#use postgres search functionality e.g. weights
+		vector = SearchVector('news_title', weight='A') + SearchVector('description', weight='B') + SearchVector('headings__heading_title', weight='C')
+
+		for keyword in filtered_sentence:
+			query = SearchQuery(keyword)
+			related_object = News.objects.annotate(rank=SearchRank(vector, query)).filter(rank__gte=0.3).order_by('rank')
 		#iterate thrue the variable
 
 			#query the News objects for object which has the word
 
-			#if there is, place them in an array or a list??
+			#if there is, append them in an array or a list??
 
+		
+
+		#DO SOMETHING LIKE THIS BEFORE PLACING LIST INTO CONTEXT:
 		if duplicates:
 			for news in duplicates:
-				#iterate thru the multiple categories and headings
+				#iterate thru the multiple categories and headings FOR EACH NEWS
 					for category,heading in zip(news.categories.all(), news.headings.all()):
 						cat_heading = {}
 						cat_heading['category'] = category.category_name
