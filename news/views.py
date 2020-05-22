@@ -105,7 +105,7 @@ def get_data(request, method="POST"):
 		#duplicates = News.objects.filter(news_title__icontains=title)
 
 		#get the title
-		stopwords = set(stopwords.words('english'))
+		stop_words = set(stopwords.words('english'))
 						
 		word_tokens = word_tokenize(title)
 		#split title into words, remove stopwords and put them into a varialbe
@@ -118,17 +118,34 @@ def get_data(request, method="POST"):
 		#use postgres search functionality e.g. weights
 		vector = SearchVector('news_title', weight='A') + SearchVector('description', weight='B') + SearchVector('headings__heading_title', weight='C')
 
+		selection = defaultdict(list)
+
 		for keyword in filtered_sentence:
 			query = SearchQuery(keyword)
-			related_object = News.objects.annotate(rank=SearchRank(vector, query)).filter(rank__gte=0.3).order_by('rank')
+			duplicates = News.objects.annotate(rank=SearchRank(vector, query)).filter(rank__gte=0.3).order_by('rank')
+
+			if duplicates:
+				for news in duplicates:
+					#check if it already exists otherwise append
+					selection[].append()
+
 		#iterate thrue the variable
 
 			#query the News objects for object which has the word
 
 			#if there is, append them in an array or a list??
 
-		
-
+		'''for headline in related_headlines:
+								if news_title is not None:
+									related_news = News.objects.filter(Q(news_title__icontains=news_title) & Q(headings__heading_title__iexact=headline.heading_title))
+									if related_news:
+										for news in related_news:
+											headlines[headline.heading_title].append(news.news_title)
+									else:
+										headlines[headline.heading_title].append(None)
+								else:
+									headlines[headline.heading_title].append(None)
+						'''
 		#DO SOMETHING LIKE THIS BEFORE PLACING LIST INTO CONTEXT:
 		if duplicates:
 			for news in duplicates:
