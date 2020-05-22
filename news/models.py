@@ -181,11 +181,11 @@ class News(models.Model):
 	#downvotes = models.IntegerField(default=0)
 	headings = models.ManyToManyField(Heading)
 	#heading = models.ForeignKey(Heading, on_delete=models.CASCADE)
-	author = models.ForeignKey(Author, on_delete=models.CASCADE)
-	publisher = models.ForeignKey(Publisher, on_delete=models.CASCADE)
+	author = models.ForeignKey(Author, on_delete=models.PROTECT)
+	publisher = models.ForeignKey(Publisher, on_delete=models.PROTECT)
 	#category = models.ForeignKey(Category, on_delete=models.CASCADE)
 	categories = models.ManyToManyField(Category)
-	location = models.ForeignKey(Location, on_delete=models.CASCADE)
+	location = models.ForeignKey(Location, on_delete=models.PROTECT)
 
 	#I think you should use MANY TO MANY FIELD since a category can have multiple news
 	def __str__(self):
