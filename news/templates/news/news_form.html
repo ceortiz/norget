@@ -38,7 +38,7 @@
 			
 		</div>
 		</br>
-		Create Headline<input type="text" name="headline" id="headline" placeholder="Headline">
+		Create Headline <input type="text" name="headline" id="headline" placeholder="Headline">
 		<div id="headlines">
 			
 		</div>
@@ -46,20 +46,45 @@
 		<button type="submit" id="submit_news">Submit</button>
 	</form>
 
-	<form method="POST" id="counter_headline_form" action="#">
+	<form method="POST" id="counter_headline_form" action="{% url 'other_perspectives' %}">
 		{% csrf_token %}
 		<br>
-		Create Counter Headline<input type="text" name="counter_headline" placeholder="Counter Headline">
+		<label for="other_news_categories">Category</label>
+		<select id="other_news_categories" name="other_news_categories" required>
+			<option value="">Choose</option>
+			<option value="Politics">Politics</option>
+			<option value="Health">Health</option>
+			<option value="Entertainment">Entertainment</option>
+			<option value="Environment">Environment</option>
+			<option value="Sports">Sports</option>
+			<option value="Arts">Arts</option>
+		</select>
+		</br>
+		Type the original headline <input type="text" name="orig_headline" id="orig_headline" placeholder="Headline">
+		<div id="orig_headlines">
+			
+		</div>
 		</br>
 
-		Type the original headline<input type="text" name="orig_headline" placeholder="Headline">
+		Create Other Perspectives <input type="text" name="counterheadline" id="counterheadline" placeholder="Counter Headline">
+		<div id="counterheadlines">
+			
+		</div>
 		</br>
+
+		Site news <input type="url" name="other_news" id="other_news" placeholder="URL">
+		</br>
+		<dir id="other_news_preview">
+			
+		</dir>
+		</br>
+
 		<button type="submit" id="submit_counternews">Submit</button>
 	</form>
 
 {% endblock %}
 
 {% block javascript %}
-	<script src="{% static 'news/news_preview.js' %}"></script>
-	<script src="{% static 'news/headline_selection.js' %}"></script>
+	<script src="{% static 'news/news_previewer.js' %}"></script>
+	<script src="{% static 'news/headline_displayer.js' %}"></script>
 {% endblock %}
