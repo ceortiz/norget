@@ -108,25 +108,6 @@ def get_data(request, method="POST"):
 			except:
 				author = ""
 		
-<<<<<<< HEAD
-
-		#query for possible duplicates 
-		existing_news = []
-
-		duplicates = News.objects.filter(news_title__icontains=title)
-
-		'''#get the title
-								stopwords = set(stopwords.words('english'))
-												
-								word_tokens = word_tokenize(title)
-								#split title into words, remove stopwords and put them into a varialbe
-								filtered_sentence = [w for w in word_tokens if not w in stop_words] '''
-						
-		#use postgres search functionality e.g. weights
-		#iterate thrue the variable
-
-			#query the News objects for object which has the word
-=======
 		#get the title
 		stop_words = set(stopwords.words('english'))
 						
@@ -136,7 +117,7 @@ def get_data(request, method="POST"):
 		
 		punctuations = list(string.punctuation)
 		punctuations.append("''")
->>>>>>> search_news
+
 
 		filtered_sentence = [i for i in pre_filtered_sentence if i not in punctuations]
 
@@ -242,105 +223,6 @@ def post_headline(request, method="POST"):
 def memory(request):
 	return render(request, 'news/memory.html')
 
-def other_perspectives(request, method="POST"):
-	#get the news title or url
-
-	#get the original headline
-
-	#get counter headline
-
-	#get the news details
-
-	#create the news
-
-	#pass to context
-
-	#FIGURE OUT THIS: get category from original news/headline
-
-	if request.method == "POST":
-		try:
-			#get category object if already existing
-			category = Category.objects.get(category_name = request.POST.get('categories'))
-		except:
-			#create new category if no similar category exists
-			category = Category(category_name = request.POST.get('categories'))
-			category.save()
-
-		try:
-			location = Location.objects.get(address = 'Dancalan')
-		except:
-			location = Location(request.POST.get('location'))
-			location.save()
-
-		try:
-			heading = Heading.objects.get(heading_title = request.POST.get('headline'))
-		except:
-			heading = Heading()
-			
-			heading.heading_title = request.POST.get('headline')
-			heading.expiration = datetime.datetime.now() + datetime.timedelta(days=7)
-			heading.number_of_news = 0
-			heading.status = 'Pending'
-			heading.upvotes = 0
-			heading.location = location
-			#downvotes = 0,
-			heading.save()
-			heading.categories.add(category)
-
-		try:
-			publisher = Publisher.objects.get(publisher_name = request.POST.get('news_site_name'))
-		except:
-			publisher = Publisher(
-				publisher_name = request.POST.get('news_site_name'),
-				address = 'Philippines',
-				location = location,
-				website = request.POST.get('news_url'),
-				)
-			publisher.save()
-
-		try:
-			author = Author.objects.get(author_name = request.POST.get('news_author'))
-		except:
-			author = Author(
-				salutation = 'Ms',
-				author_name = request.POST.get('news_author'),
-				email = 'ceortiz@up.edu.ph',
-				)
-			author.save()
-
-		news = News()
-		news.news_title = request.POST.get('news_title')
-		news.description = request.POST.get('news_description')
-		news.pub_date = datetime.datetime.now()
-		news.link = request.POST.get('news_url')
-		news.status = 'Pending'
-		news.upvotes = 0
-		#headings.set(heading),
-		#headings = heading,
-		news.author = author
-		news.publisher = publisher
-		#categories = category,
-		news.location = location
-		news.save()
-		#look for heading and category
-		#related_news = News.objects.filter(headings_heading_title__iexact=heading.heading_title)
-		#related_news = News.objects.filter(headings__heading_title__iexact=request.POST.get('headline').count()
-		#if related_news > 0:
-
-		#check if duplicates exist
-		#if no duplicates, save
-
-		news.headings.add(heading)
-		news.categories.add(category)
-
-		#return render(request, 'news/home.html', {'news':news,})
-		return redirect('index')
-
-	else:
-		return render(request, 'news/home.html')
-
-	return render(request, 'news/home.html')
-	pass
 
 def headlines_selection(request, method="POST"):
 	if request.method == "POST":
