@@ -29,3 +29,14 @@
 
 	{% endif %}
 </div>
+
+<div>
+	{% if similar_news %}
+		<h2 style="color:blue;">A similar news appears in:</h2>
+		{% for news in similar_news %}
+			<h2>{{ news.news_title }} in {{news.headings__heading_title}} under {{news.categories__category_name}}</h2>
+		{% endfor %}
+	{% else %}
+		<h2>No similar news</h2>
+	{% endif %}
+</div>
